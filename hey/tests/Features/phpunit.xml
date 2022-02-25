@@ -1,0 +1,7 @@
+<phpunit bootstrap="bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Controllers">
+            <file>app/Http/Controllers/baseControllerTest.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>
