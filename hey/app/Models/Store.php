@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
+
 
 class Store extends Model
 {
@@ -25,5 +27,13 @@ class Store extends Model
         'url'
     ];
 
-
+    /**
+     * Get the stores orders.
+     * 
+     * @return Order related order
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

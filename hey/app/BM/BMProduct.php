@@ -93,4 +93,9 @@ class BMProduct implements IModels {
         //Here we must validate product data to persist using validator class
         $this->repository->persistOneProductCategory($this->data);
     }   
+    public function createProductWithItsCategories()
+    {
+        //Here we must validate product data to persist using validator class
+        $this->repository->createProductWithItsCategories($this->data);
+    }
 }

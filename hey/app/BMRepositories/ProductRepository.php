@@ -56,4 +56,21 @@ class ProductRepository implements IRepository {
         $productCategoryId = $productCategoryDB::create($productCategoryData);
         return $productCategoryId;
     }
+
+    /**
+     * Function to persist one product with its related categories
+     *
+     * @param array $data
+     *
+     * @return ProductCategory $productCategoryId
+     */
+    public function createProductWithItsCategories(array $data):ProductCategory
+    {
+        $persistedProduct = $this->persistOneProduct($data);
+        foreach ($data['categories'] as $category) {
+            $productCategoryDB = new ProductCategory();
+            $productCategoryDB::create(['product_id' => $persistedProduct->id,'category_product_id' => $category]);
+        }
+        return $persistedProduct;
+    }
 }

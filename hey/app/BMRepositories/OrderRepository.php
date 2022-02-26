@@ -3,7 +3,9 @@ namespace App\BMRepositories;
 
 use App\BMRepositories\Interfaces\IRepository;
 use App\Models\Order;
+use App\Models\Store;
 use App\Models\ProductsOrder;
+use Illuminate\Database\Eloquent\Collection;
 
 class OrderRepository implements IRepository {
 
@@ -54,5 +56,31 @@ class OrderRepository implements IRepository {
         }
         return $orderId;
     }
+        
+    /**
+     * Function to get one store orders
+     *
+     * @param array $data
+     *
+     * @return Collection of orders objects
+     */
+    public function getOneStoreOrders(array $data):Collection
+    {
+        $orders = Store::find($data['store_id'])->orders;
+        return $orders;
+    }
 
+    /**
+     * Function to get all store orders
+     *
+     * @return Collection of orders objects
+     */
+    public function getAllStoreOrders():Collection
+    {
+        
+        $order = new Order();
+        $orders = $order->all();
+        return $orders;
+    }  
+    
 }
