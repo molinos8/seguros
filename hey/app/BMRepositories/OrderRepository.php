@@ -46,16 +46,11 @@ class OrderRepository implements IRepository {
      */
     public function persistOneOrderWithItsProducts(array $data):Order
     {
-        $orderData = [
-            'user_id' => $data['user_id'],
-            'store_id' => $data['store_id'],
-            'total_price' => $data['total_price']
-        ];
-        $orderDB = new Order();
-        $orderId = $orderDB::create($orderData);
+       
+        $orderId = $this->persistOneOrder($data);
         foreach ($data['products'] as $product) {
             $orderProductDB = new ProductsOrder();
-            $orderProductId = $orderProductDB::create(['order_id' => $orderId->getId(),]);
+            $orderProductDB::create(['order_id' => $orderId->id,'product_id' => $product]);
         }
         return $orderId;
     }

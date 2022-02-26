@@ -92,6 +92,6 @@ class BMOrder implements IModels {
     public function persistOneOrderWithItsProducts()
     {
         //Here we must validate product data to persist using validator class
-        $this->repository->persistOneOrderWithItsProduct($this->data);       
+        $this->repository->persistOneOrderWithItsProducts($this->data);       
     }
 }
