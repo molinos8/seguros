@@ -1,10 +1,12 @@
 <?php
 namespace App\BMRepositories;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\BMRepositories\Interfaces\IRepository;
 use App\Models\Product;
+use App\Models\Supplier;
 use App\Models\ProductCategory;
-use Carbon\Carbon;
+use App\Models\ProductSupplier;
 
 class ProductRepository implements IRepository {
 
@@ -62,9 +64,9 @@ class ProductRepository implements IRepository {
      *
      * @param array $data
      *
-     * @return ProductCategory $productCategoryId
+     * @return Product $productCategoryId
      */
-    public function createProductWithItsCategories(array $data):ProductCategory
+    public function createProductWithItsCategories(array $data):Product
     {
         $persistedProduct = $this->persistOneProduct($data);
         foreach ($data['categories'] as $category) {
@@ -73,4 +75,60 @@ class ProductRepository implements IRepository {
         }
         return $persistedProduct;
     }
+
+    /**
+     * Function to persist one product with its related categories and suppliers
+     *
+     * @param array $data
+     *
+     * @return Product $productCategoryId
+     */
+    public function createProductWithItsCategoriesAndSupplier(array $data):Product
+    {
+        $persistedProduct = $this->persistOneProduct($data);
+        foreach ($data['categories'] as $category) {
+            $productCategoryDB = new ProductCategory();
+            $productCategoryDB::create(['product_id' => $persistedProduct->id,'category_product_id' => $category]);
+        }
+        foreach ($data['suppliers'] as $supplier) {
+            $productSupplierDB = new ProductSupplier();
+            $productSupplierDB::create(['product_id' => $persistedProduct->id,'supplier_id' => $supplier]);
+        }
+        return $persistedProduct;
+    }
+
+    /**
+     * Function to get products of one supplier store
+     *
+     * @param array $data
+     *
+     * @return Collection products collection
+     */
+    public function getSupplierProducts(array $data):Collection
+    {
+        $products = Product::find($data['supplier_id'])->suppliers;
+
+        return $products;
+    }
+
+    /**
+     * Function to one store best seller product
+     *
+     * @param array $data
+     *
+     * @return ProductCategory $productCategoryId
+     */
+    public function getOneStoreBestSelledProduct(array $data):Collection
+    {
+        $bestSellerSotoreProduct = Product::select('product.name')
+            ->groupBy('product.name')
+            ->join('products_order', 'products_order.product_id', '=', 'product.id')
+            ->join('order', 'products_order.order_id', '=', 'order.id')
+            ->join('store', 'store.id', '=', 'order.id')
+            ->where('store.id', $data['store_id'])
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(1)
+            ->get();
+            return $bestSellerSotoreProduct;
+    } 
 }

@@ -44,7 +44,8 @@ class BaseController extends Controller
     
     public function callActionModel()
     {
-        call_user_func([$this->businessModel,$this->action]);
+        $response = call_user_func([$this->businessModel,$this->action]);
+        return $response;
 
     }
 }

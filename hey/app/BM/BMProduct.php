@@ -83,19 +83,43 @@ class BMProduct implements IModels {
         $this->repository = $repository;
         $this->data = $data;
     }
+
     public function createProduct()
     {
         //Here we must validate product data to persist using validator class
         $this->repository->persistOneProduct($this->data);
     }   
+
     public function createProductCategory()
     {
         //Here we must validate product data to persist using validator class
         $this->repository->persistOneProductCategory($this->data);
     }   
+
     public function createProductWithItsCategories()
     {
         //Here we must validate product data to persist using validator class
         $this->repository->createProductWithItsCategories($this->data);
+    }
+    public function createProductWithItsCategoriesAndSupplier()
+    {
+        //Here we must validate product data to persist using validator class
+        $this->repository->createProductWithItsCategoriesAndSupplier($this->data);
+    }
+
+    public function getSupplierProducts()
+    {
+        $this->repository->getSupplierProducts($this->data);
+    }
+
+    public function getStoreBestSelledProduct()
+    {
+         //Here we must validate product data to persist using validator class
+         if(!isset($this->data['store_id'])){
+            $bestSellerProduct = $this->repository->getBestSelledProduct();  
+            return $bestSellerProduct;
+         }
+         $StoreBestSelledProduct = $this->repository->getOneStoreBestSelledProduct($this->data);
+         return $StoreBestSelledProduct;    
     }
 }

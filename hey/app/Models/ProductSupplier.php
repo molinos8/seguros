@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductCategory extends Model
+class ProductSupplier extends Model
 {
 
     /**
@@ -12,7 +12,7 @@ class ProductCategory extends Model
      *
      * @var string
      */
-    protected $table = 'products_category';
+    protected $table = 'product_suppliers';
 
     /**
      * List of fields that can be filled on the model by the aplication
@@ -20,8 +20,8 @@ class ProductCategory extends Model
      * @var array
      */
     protected $fillable = [
-        'product_id',
-        'category_product_id'
+        'supplier_id',
+        'product_id'
     ];
 
 

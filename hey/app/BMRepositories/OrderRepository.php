@@ -28,14 +28,17 @@ class OrderRepository implements IRepository {
      */
     public function persistOneOrder(array $data):Order
     {
+        try {
         $orderData = [
             'user_id' => $data['user_id'],
             'store_id' => $data['store_id'],
             'total_price' => $data['total_price']
         ];
         $orderDB = new Order();
-        $orderId = $orderDB::create($orderData);
-
+            $orderId = $orderDB::create($orderData);
+        } catch (\Exception $e) {
+            throw new \Exception('Cant persist because '.$e->getMessage(), 000001);
+        }
         return $orderId;
     }
 

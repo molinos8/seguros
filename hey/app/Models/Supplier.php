@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Product;
 
 class Supplier extends Model
 {
@@ -23,6 +24,5 @@ class Supplier extends Model
         'name',
         'slug',
     ];
-
 
 }

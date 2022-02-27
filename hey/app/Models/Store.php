@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Order;
 
-
 class Store extends Model
 {
 
@@ -36,4 +35,5 @@ class Store extends Model
     {
         return $this->hasMany(Order::class);
     }
+
 }
