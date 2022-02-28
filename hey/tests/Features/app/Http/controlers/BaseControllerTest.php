@@ -20,5 +20,14 @@ class BaseControllerTest extends TestCase
         $this->assertInstanceOf(\App\Http\Controllers\BaseController ::class, $controller);
     }
 
-    
+      /**
+     * Test that baseControllerClass Exists
+     *
+     * @return void
+     */
+    public function test_baseControllerClassExists()
+    {
+        $controller = $this->getMockBuilder(\App\Http\Controllers\BaseController::class)->disableOriginalConstructor()->getMockForAbstractClass();
+        $this->assertInstanceOf(\App\Http\Controllers\BaseController ::class, $controller);
+    }  
 }

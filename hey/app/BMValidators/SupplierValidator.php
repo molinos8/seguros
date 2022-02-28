@@ -1,10 +1,10 @@
 <?php
 namespace App\BMValidators;
 
-use App\BMValidators\Interfaces\IValidators;
+use App\BMValidators\Interfaces\IValidator;
 
-class SupplierValidator implements IValidators{
-    public function validate() {
+class SupplierValidator implements IValidator{
+    public function validate(array $actionParams) {
 
     }
 }

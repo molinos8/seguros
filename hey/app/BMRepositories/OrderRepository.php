@@ -52,11 +52,15 @@ class OrderRepository implements IRepository {
      */
     public function persistOneOrderWithItsProducts(array $data):Order
     {
-       
+
         $orderId = $this->persistOneOrder($data);
-        foreach ($data['products'] as $product) {
-            $orderProductDB = new ProductsOrder();
-            $orderProductDB::create(['order_id' => $orderId->id,'product_id' => $product]);
+        try {
+            foreach ($data['products'] as $product) {
+                $orderProductDB = new ProductsOrder();
+                $orderProductDB::create(['order_id' => $orderId->id,'product_id' => $product]);
+            }
+        } catch (\Exception $e) {
+            throw new PersistsException('Cant persist because '.$e->getMessage(), '002');
         }
         return $orderId;
     }

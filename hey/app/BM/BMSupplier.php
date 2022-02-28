@@ -2,7 +2,7 @@
 namespace App\BM;
 
 use App\BMFormatters\Interfaces\IModels;
-use App\BMValidators\Interfaces\IValidators;
+use App\BMValidators\Interfaces\IValidator;
 use App\BMRepositories\Interfaces\IRepository;
 use App\BMFormatters\Interfaces\IBMRequest;
 
@@ -77,7 +77,7 @@ class BMSupplier implements IModels {
     {
     }
   
-    public function __construct(IValidators $validator, IRepository $repository, array $data)
+    public function __construct(IValidator $validator, IRepository $repository, array $data)
     {   
         $this->validator = $validator;
         $this->repository = $repository;
