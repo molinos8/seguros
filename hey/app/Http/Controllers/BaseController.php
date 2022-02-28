@@ -2,13 +2,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use app\BM\Wrappers\BMErrors;
-//use GuzzleHttp\Psr7\Request;
-use Illuminate\Http\Request;
+use App\BMWrappers\BMErrors;
+use App\BMWrappers\BMActionOk;
 use App\BMFormatters\Interfaces\IModels;
-use App\BMValidators\Interfaces\IValidators;
-use App\BMRepositories\Interfaces\IRepository;
-use App\BMFormatters\Interfaces\IBMRequest;
+
 
 
 
@@ -45,7 +42,12 @@ class BaseController extends Controller
     public function callActionModel()
     {
         $response = call_user_func([$this->businessModel,$this->action]);
-        return $response;
+        if ($response instanceof BMErrors)  {
+            dd($response);
+        }
+        if ($response instanceof BMActionOk)  {
+            dd($response);
+        }
 
     }
 }

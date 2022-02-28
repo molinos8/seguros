@@ -4,7 +4,6 @@ namespace App\BMRepositories;
 use App\BMRepositories\Interfaces\IRepository;
 use App\Models\Supplier;
 use App\Models\SupplierContact;
-use Carbon\Carbon;
 
 class SupplierRepository implements IRepository {
 
@@ -57,4 +56,15 @@ class SupplierRepository implements IRepository {
         return $supplierContactId;
     }
 
+    /**
+     * Function to delete one supplier Contact
+     *
+     * @param array $data
+     */
+    public function deleteSupplierContact(array $data)
+    {
+        $supplierContact = new SupplierContact();
+        $supplierContact->find($data['id']);
+        $supplierContact->delete();
+    }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace app\BM\Wrappers;
+namespace app\BMWrappers;
 
-use App\BM\BMFormatters\Interfaces\IBMErrors;
+use App\BMFormatters\Interfaces\IBMResponse;
 
-class BMErrors implements IBMErrors
+class BMErrors implements IBMResponse
 {
     private $errors;
     private $name;

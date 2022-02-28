@@ -4,9 +4,26 @@ namespace App\BM;
 use App\BMFormatters\Interfaces\IModels;
 use App\BMValidators\Interfaces\IValidators;
 use App\BMRepositories\Interfaces\IRepository;
-use App\BMFormatters\Interfaces\IBMRequest;
+use App\BMExceptions\PersistsException;
+use App\BMWrappers\BMErrors;
+use App\BMFormatters\Interfaces\IBMResponse;
+use App\BMWrappers\BMActionOk;
 
 class BMOrder implements IModels {
+
+    /**
+     * Id of the Business Model
+     *
+     * @var int
+     */
+    private $entityId = '001';
+
+    /**
+     * Name of the Business Model
+     *
+     * @var string
+     */
+    private $entityType = 'Order';
 
     /**
      * Action data
@@ -83,11 +100,20 @@ class BMOrder implements IModels {
         $this->repository = $repository;
         $this->data = $data;
     }
-
-    public function createOrder()
+    /**
+     * Creates one order
+     *
+     * @return IBMResponse Error or Ok BM response
+     */
+    public function createOrder():IBMResponse
     {
         //Here we must validate product data to persist using validator class
-        $this->repository->persistOneOrder($this->data);
+        try {
+            $creatingResult = $this->repository->persistOneOrder($this->data);
+        } catch(PersistsException $e) {
+            return new BMErrors($this->getType(), $this->getId().$e->getCode(),'Error persisting order','Problen ocurred whitle trying to persists order',['Maybe some params name are wrong','maybe some parmas types are wrong'],[]);
+        }
+        return new BMActionOk($this->getType(), $this->getId().'001','Order created','Order was correctly created',$creatingResult);
     }   
     public function persistOneOrderWithItsProducts()
     {

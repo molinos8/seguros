@@ -116,9 +116,9 @@ class ProductRepository implements IRepository {
      *
      * @param array $data
      *
-     * @return ProductCategory $productCategoryId
+     * @return string $bestSellerSotoreProduct product name
      */
-    public function getOneStoreBestSelledProduct(array $data):Collection
+    public function getOneStoreBestSelledProduct(array $data):string
     {
         $bestSellerSotoreProduct = Product::select('product.name')
             ->groupBy('product.name')
@@ -126,6 +126,22 @@ class ProductRepository implements IRepository {
             ->join('order', 'products_order.order_id', '=', 'order.id')
             ->join('store', 'store.id', '=', 'order.id')
             ->where('store.id', $data['store_id'])
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(1)
+            ->get();
+            return $bestSellerSotoreProduct;
+    } 
+    /**
+     * Function to get best seller product
+     *
+     * @param array $data
+     *
+     * @return string $bestSellerSotoreProduct product name
+     */
+    public function getBestSelledProduct():string
+    {
+        $bestSellerSotoreProduct = Product::select('name')
+            ->groupBy('name')
             ->orderByRaw('COUNT(*) DESC')
             ->limit(1)
             ->get();

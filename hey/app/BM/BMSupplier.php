@@ -95,4 +95,9 @@ class BMSupplier implements IModels {
         //Here we must validate Supplier data to persist using validator class
         $this->repository->persistOneSupplierContact($this->data);
     }   
+
+    public function deleteSupplierContact()
+    {
+        $this->repository->deleteSupplierContact($this->data);
+    }
 }

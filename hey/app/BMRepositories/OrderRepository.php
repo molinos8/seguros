@@ -5,6 +5,7 @@ use App\BMRepositories\Interfaces\IRepository;
 use App\Models\Order;
 use App\Models\Store;
 use App\Models\ProductsOrder;
+use App\BMExceptions\PersistsException;
 use Illuminate\Database\Eloquent\Collection;
 
 class OrderRepository implements IRepository {
@@ -29,15 +30,15 @@ class OrderRepository implements IRepository {
     public function persistOneOrder(array $data):Order
     {
         try {
-        $orderData = [
-            'user_id' => $data['user_id'],
-            'store_id' => $data['store_id'],
-            'total_price' => $data['total_price']
-        ];
-        $orderDB = new Order();
+            $orderData = [
+                'user_id' => $data['user_id'],
+                'store_id' => $data['store_id'],
+                'total_price' => $data['total_price']
+            ];
+            $orderDB = new Order();
             $orderId = $orderDB::create($orderData);
         } catch (\Exception $e) {
-            throw new \Exception('Cant persist because '.$e->getMessage(), 000001);
+            throw new PersistsException('Cant persist because '.$e->getMessage(), '001');
         }
         return $orderId;
     }
